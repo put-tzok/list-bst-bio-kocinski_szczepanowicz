@@ -35,6 +35,8 @@ struct node **tree_search(struct node **candidate, int value) {
     return candidate;
 }
 
+struct node **candidate;
+
 struct node* tree_insert(int value) {
     // TODO: implement
     candidate = tree_search(&root, value);
