@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-unsigned int ns[] = { 10, /* TODO: fill values which will be used as lists' sizes */ };
+unsigned int ns[] = { 1000,3000, 9000, 15000, 25000, 40000, 50000, 80000, 100000  };
 
 // each list node contains an integer key value and pointer to next list node
 struct node {
@@ -14,25 +14,53 @@ struct node {
 
 // list's beginning is called the head of list
 struct node *head = NULL;
-
+struct node* inter;// towrzy obiekt struktury inter do przechowywania wartoœci
 
 struct node* list_insert(int value) {
-    // TODO: implement
-    return NULL;
+  struct node * nowy= malloc(sizeof(*nowy));//tworzy dynamicznie obiekt struktury
+   nowy->key= value;// przypisuje wartoœci key w nowym obiekcie wartoœæ value
+   nowy->next=head;// ustawia head jako nastepny element
+    head=nowy;// ustawia obiekt nowy jako head
+    return nowy;
+return NULL;
 }
 
 struct node* list_search(int value) {
-    // TODO: implement
+
+    inter=head;// ustawia inter jako pierwszy element listy
+    while (inter!=NULL && (*inter).key!=value)//dopóki inter jest różna od zera i inter.key jest różne od wartości
+        inter=(*inter).next;// inter przesuwa sie na następny element tablicy
+    return inter;// zwraca wartość inter
     return NULL;
 }
 
 void list_delete(int value) {
-    // TODO: implement
+   if((*head).key==value)// jeśli key od głowy równa się value
+    head=(*head).next;// przesuwa sie na następny element tablicy
+   else
+   {
+       struct node * prev=head;// tworzy nowy obiekt prev i ustawia go jako głowe
+       inter=(*head).next;//ustwia inter jako nastepny element po głowie
+       while(inter!=NULL && (*inter).key!=value)// dopóki inter jest różny od 0 i inter.key jest rożny od value
+        {
+            prev=inter;
+            inter=(*inter).next;// przesuwamy inter na kolejny element listy
+        }
+       if (inter!=NULL) // jeśli w else inter nie jest 0 to
+        (*prev).next=(*inter).next;//prev.next ustawia jako inter.next
+   }
 }
 
 unsigned int list_size() {
-    // TODO: implement
-    return 0;
+int size=0;//tworzy inta size i ustawia jako zero
+inter=head;// ustawia inter jako głowe
+while(inter!=NULL)// dopóki inter jest różny od 0
+  {
+   size=size+1;
+inter=(*inter).next;// inter ustawia jako nastepny element po nim
+  }
+
+    return size;
 }
 
 /*
@@ -123,3 +151,6 @@ int main() {
     }
     return 0;
 }
+
+
+
