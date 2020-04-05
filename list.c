@@ -1,3 +1,5 @@
+
+
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -28,26 +30,26 @@ return NULL;
 struct node* list_search(int value) {
 
     inter=head;// ustawia inter jako pierwszy element listy
-    while (inter!=NULL && (*inter).key!=value)//dopóki inter jest różna od zera i inter.key jest różne od wartości
-        inter=(*inter).next;// inter przesuwa sie na następny element tablicy
+    while (inter!=NULL && inter->key!=value)//dopóki inter jest różna od zera i inter.key jest różne od wartości
+        inter=inter->next;// inter przesuwa sie na następny element tablicy
     return inter;// zwraca wartość inter
     return NULL;
 }
 
 void list_delete(int value) {
-   if((*head).key==value)// jeśli key od głowy równa się value
-    head=(*head).next;// przesuwa sie na następny element tablicy
+   if(head->key==value)// jeśli key od głowy równa się value
+    head=head->next;// przesuwa sie na następny element tablicy
    else
    {
        struct node * prev=head;// tworzy nowy obiekt prev i ustawia go jako głowe
-       inter=(*head).next;//ustwia inter jako nastepny element po głowie
-       while(inter!=NULL && (*inter).key!=value)// dopóki inter jest różny od 0 i inter.key jest rożny od value
+       inter=head->next;//ustwia inter jako nastepny element po głowie
+       while(inter!=NULL && inter->key!=value)// dopóki inter jest różny od 0 i inter.key jest rożny od value
         {
             prev=inter;
-            inter=(*inter).next;// przesuwamy inter na kolejny element listy
+            inter=inter->next;// przesuwamy inter na kolejny element listy
         }
        if (inter!=NULL) // jeśli w else inter nie jest 0 to
-        (*prev).next=(*inter).next;//prev.next ustawia jako inter.next
+        prev->next=inter->next;//prev.next ustawia jako inter.next
    }
 }
 
@@ -57,7 +59,7 @@ inter=head;// ustawia inter jako głowe
 while(inter!=NULL)// dopóki inter jest różny od 0
   {
    size=size+1;
-inter=(*inter).next;// inter ustawia jako nastepny element po nim
+inter=inter->next;// inter ustawia jako nastepny element po nim
   }
 
     return size;
