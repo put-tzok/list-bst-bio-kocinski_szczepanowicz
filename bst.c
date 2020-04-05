@@ -162,11 +162,11 @@ void insert_random(int *t, int n) {
 }
 
 void tree_insert_biject(int *t, int p, int r) {
-    if (p = r) {
+    if (p == r) {
         tree_insert(t[p]);
     }
     if (r - p == 1) {
-         tree_insert(t[p]);
+        tree_insert(t[p]);
         tree_insert(t[r]);
     }
 
