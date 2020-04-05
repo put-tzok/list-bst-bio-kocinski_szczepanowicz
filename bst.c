@@ -5,7 +5,7 @@
 #include <signal.h>
 #include <time.h>
 
-unsigned int ns[] = { 10, 1000, 5000, 10000, 20000 };
+unsigned int ns[] = { 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000/* TODO: fill values which will be used as lists' sizes */ };
 
 // each tree node contains an integer key and pointers to left and right children nodes
 struct node {
@@ -18,70 +18,78 @@ struct node {
 struct node *root = NULL;
 
 struct node **tree_search(struct node **candidate, int value) {
-    // TODO: implement
-    if((*candidate)==0)
-    {
-         return candidate;
-    }
-    if (value < (**candidate).key)
-    {
-         return tree_search(&(**candidate).left, value);
-    }
-
-    if(value > (**candidate).key)
-    {
-         return tree_search(&(**candidate).right, value);
-    }
-    return candidate;
+    if(*candidate == NULL)
+        {
+        return candidate;
+        }
+    if (value < (**candidate).key)                                    // jesli wartość value jest mniejsza od key kandydata wartości
+        {
+        return tree_search(&(**candidate).left, value);                // zwroc kandydata na lewo
+        }
+    if (value > (**candidate).key)                                    // jesli wartość value jest większa od key kandydata wartości
+        {
+        return tree_search(&(**candidate).right, value);               // zwroc kandydata na prawo
+        }
+    return candidate;                                                // zwroc kandydata
+    return NULL;
 }
 
-struct node **candidate;
+struct node **candidate;                                              // tworze obiekt struktury candidate
 
 struct node* tree_insert(int value) {
-    // TODO: implement
-    candidate = tree_search(&root, value);
+    candidate = tree_search(&root, value);                              // ustawiam kandydata na tree search z argumentem jako korzeniem
     struct node *createNode = malloc(sizeof(*createNode));
-    (*createNode).key = value;
-    (*createNode).left = NULL;
-    (*createNode).right = NULL;
-    *candidate = createNode;
+    (*createNode).key = value;                                          // ustawiam key od createNode na wartość value
+    (*createNode).right = NULL;                                         // createNode na prawo ustawiam jako zero
+    (*createNode).left = NULL;                                          // createNode na lewo ustawiam jako zero
+    *candidate = createNode;                                          // wartość kandydata ustawiam jako createNode
+    return NULL;
 }
 
+
+
 struct node **tree_maximum(struct node **candidate) {
-    // TODO: implement
-    f ((**candidate).right != NULL)
+    if ((**candidate).right != NULL)                                  // jesli kandydat na prawo nie jest zerem
         {
-             return tree_maximum(&(**candidate).right);
+        return tree_maximum(&(**candidate).right);                     // zwroc tree maximum gdzie argumentem jest kandydat na prawo
         }
-    return candidate;
+    return candidate;                                                 // zwroc kandydata
+    return NULL;
 }
 
 void tree_delete(int value) {
-    // TODO: implement
     candidate = tree_search(&root, value);
-    if (((**candidate).left == NULL) && ((**candidate).right == NULL)){
-                    *candidate = NULL;
-                    }
-    else if (((**candidate).left != NULL) && ((**candidate).right == NULL)){
+    if (((**candidate).left == NULL) && ((**candidate).right == NULL))
+        {
+        *candidate = NULL;
+        }
+    else if (((**candidate).left != NULL) && ((**candidate).right == NULL))
+        {
         *candidate = (**candidate).left;
         }
-    else if (((**candidate).left == NULL) && ((**candidate).right != NULL)){
+    else if (((**candidate).left == NULL) && ((**candidate).right != NULL))
+        {
         *candidate = (**candidate).right;
         }
-    else {
-    struct node **maxcandidate;
-    maxcandidate = tree_maximum(&(**candidate).left);
-    (**candidate).key = (**maxcandidate).key;
-    *maxcandidate = (**maxcandidate).left;
-    }
+    else
+        {
+        struct node **maxcandidate;
+        maxcandidate = tree_maximum(&(**candidate).left);
+        (**candidate).key = (**maxcandidate).key;
+        *maxcandidate = (**maxcandidate).left;
+        }
 }
 
 unsigned int tree_size(struct node *element) {
-    // TODO: implement
-    if (element == NULL)
-        return 0;
-    else
-        return(tree_size((*element).left) + 1 + tree_size((*element).right));
+  if(element == NULL)
+  {
+    return 0;
+  }
+  else
+  {
+    return 1 + tree_size((*element).left) + tree_size((*element).right);
+    return 0;
+  }
 }
 
 /*
@@ -159,16 +167,20 @@ void insert_random(int *t, int n) {
     }
 }
 
+
 void tree_insert_biject(int *t, int p, int r) {
-    if (p == r) {
+    if(p == r)
+    {
         tree_insert(t[p]);
     }
-    if (r - p == 1) {
+
+    else if(r-p == 1)
+    {
         tree_insert(t[p]);
         tree_insert(t[r]);
     }
-
-    else {
+    else
+    {
         int q = p + (r - p)/2;
         tree_insert(t[q]);
         tree_insert_biject(t, p, q-1);
@@ -176,13 +188,10 @@ void tree_insert_biject(int *t, int p, int r) {
     }
 }
 
-
-
-void insert_binary(int *t, int n) {
-    // TODO: implement
-    //sort(t);
+void insert_binary(int *t, int n){
     tree_insert_biject(t, 0, n-1);
 }
+
 
 char *insert_names[] = { "Increasing", "Random", "Binary" };
 void (*insert_functions[])(int*, int) = { insert_increasing, insert_random, insert_binary };
