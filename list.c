@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-unsigned int ns[] = { 1000,3000, 9000, 15000, 25000, 40000, 50000, 80000, 100000  };
+unsigned int ns[] = { 1000,5000, 10000, 20000, 30000, 37500,40000, 47500, 60000  };
 
 // each list node contains an integer key value and pointer to next list node
 struct node {
