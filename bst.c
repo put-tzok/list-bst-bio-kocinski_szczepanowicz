@@ -47,8 +47,6 @@ struct node* tree_insert(int value) {
     *candidate = createNode;
 }
 
-
-
 struct node **tree_maximum(struct node **candidate) {
     // TODO: implement
     f ((**candidate).right != NULL)
@@ -67,7 +65,7 @@ void tree_delete(int value) {
     else if (((**candidate).left != NULL) && ((**candidate).right == NULL)){
         *candidate = (**candidate).left;
         }
-    else if (((**candidate).left == NULL) && ((**candidate).right == NULL)){
+    else if (((**candidate).left == NULL) && ((**candidate).right != NULL)){
         *candidate = (**candidate).right;
         }
     else {
@@ -178,8 +176,11 @@ void tree_insert_biject(int *t, int p, int r) {
     }
 }
 
+
+
 void insert_binary(int *t, int n) {
     // TODO: implement
+    //sort(t);
     tree_insert_biject(t, 0, n-1);
 }
 
